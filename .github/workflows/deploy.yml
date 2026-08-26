@@ -22,13 +22,13 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
-      - name: Deploy to OVH via SFTP (password)
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+      - name: Deploy to OVH via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          server: ${{ secrets.FABRLT_FTP_SERVER }}
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
+          server: ${{ secrets.FABRLT_FTP_SERVER }}
+          local_path: './dist/*'
+          remote_path: '/www/'
+          port: 22
+          sftp_only: true
           password: ${{ secrets.FABRLT_FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /www/
-          port: 21
-          protocol: ftps
