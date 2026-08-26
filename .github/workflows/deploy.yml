@@ -25,10 +25,10 @@ jobs:
       - name: Deploy to OVH via SFTP (password)
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          server: ${{ secrets.FABRLT_FTP_USERNAME_URL }}
+          server: ${{ secrets.FABRLT_FTP_SERVER }}
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
           password: ${{ secrets.FABRLT_FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /www/
           port: 22
-          protocol: sftp
+          protocol: ftps
