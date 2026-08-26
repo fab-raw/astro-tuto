@@ -1,4 +1,4 @@
-name: Deploy Astro to OVH via SFTP (password)
+name: Deploy Astro to OVH via SFTP
 
 on:
   push:
