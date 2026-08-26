@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -23,7 +23,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to OVH via SFTP (password)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FABRLT_FTP_USERNAME_URL }}
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
