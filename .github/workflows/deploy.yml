@@ -3,6 +3,7 @@ name: Deploy Astro to OVH via SFTP
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -27,8 +28,8 @@ jobs:
         with:
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
           server: ${{ secrets.FABRLT_FTP_SERVER }}
+          password: ${{ secrets.FABRLT_FTP_PASSWORD }}
           local_path: './dist/*'
-          remote_path: './www/portfolio/'
+          remote_path: '/www/portfolio/'
           port: 22
           sftp_only: true
-          password: ${{ secrets.FABRLT_FTP_PASSWORD }}
