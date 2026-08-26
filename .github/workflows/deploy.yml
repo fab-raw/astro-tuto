@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
           server: ${{ secrets.FABRLT_FTP_SERVER }}
           local_path: './dist/*'
-          remote_path: '/www/'
+          remote_path: './'
           port: 22
           sftp_only: true
           password: ${{ secrets.FABRLT_FTP_PASSWORD }}
