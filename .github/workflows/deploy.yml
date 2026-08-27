@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -22,6 +23,27 @@ jobs:
 
       - name: Build Astro site
         run: npm run build
+
+      - name: Debug SFTP paths
+        env:
+          SSHPASS: ${{ secrets.FABRLT_FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y sshpass
+
+          sshpass -e sftp \
+            -o StrictHostKeyChecking=no \
+            -P 22 \
+            ${{ secrets.FABRLT_FTP_LOGIN }}@${{ secrets.FABRLT_FTP_SERVER }} <<'EOF'
+          pwd
+          ls
+          ls /www
+          ls /home
+          ls /home/fabienrawj
+          ls /home/fabienrawj/www
+          ls /home/fabienrawj/www/portfolio
+          bye
+          EOF
 
       - name: Deploy to OVH via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
