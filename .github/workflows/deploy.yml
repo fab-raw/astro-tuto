@@ -24,16 +24,15 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
-      - name: Debug SFTP connection
+      - name: Debug SFTP paths
         env:
           SSHPASS: ${{ secrets.FABRLT_FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y sshpass
 
-          echo "Testing SFTP connection..."
-
-          printf 'pwd\n' | sshpass -e sftp \
+          printf 'ls\nls www\nls www/portfolio\n' | \
+          sshpass -e sftp \
             -o StrictHostKeyChecking=no \
             -P 22 \
             "${{ secrets.FABRLT_FTP_LOGIN }}@${{ secrets.FABRLT_FTP_SERVER }}"
