@@ -24,26 +24,19 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
-      - name: Debug SFTP paths
+      - name: Debug SFTP connection
         env:
           SSHPASS: ${{ secrets.FABRLT_FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y sshpass
 
-          sshpass -e sftp \
+          echo "Testing SFTP connection..."
+
+          printf 'pwd\n' | sshpass -e sftp \
             -o StrictHostKeyChecking=no \
             -P 22 \
-            ${{ secrets.FABRLT_FTP_LOGIN }}@${{ secrets.FABRLT_FTP_SERVER }} <<'EOF'
-          pwd
-          ls
-          ls /www
-          ls /home
-          ls /home/fabienrawj
-          ls /home/fabienrawj/www
-          ls /home/fabienrawj/www/portfolio
-          bye
-          EOF
+            "${{ secrets.FABRLT_FTP_LOGIN }}@${{ secrets.FABRLT_FTP_SERVER }}"
 
       - name: Deploy to OVH via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
