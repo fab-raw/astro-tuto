@@ -24,15 +24,15 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
-      - name: Debug SFTP paths
+      - name: Check remote SFTP paths
         env:
           SSHPASS: ${{ secrets.FABRLT_FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y sshpass
 
-          printf 'ls\nls www\nls www/portfolio\n' | \
-          sshpass -e sftp \
+          printf "pwd\nls -la\nls -la /home\nls -la /home/fabienrawj\nls -la /home/fabienrawj/www\nls -la /home/fabienrawj/www/portfolio\nbye\n" | \
+            sshpass -e sftp \
             -o StrictHostKeyChecking=no \
             -P 22 \
             "${{ secrets.FABRLT_FTP_LOGIN }}@${{ secrets.FABRLT_FTP_SERVER }}"
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.FABRLT_FTP_LOGIN }}
           server: ${{ secrets.FABRLT_FTP_SERVER }}
           password: ${{ secrets.FABRLT_FTP_PASSWORD }}
-          local_path: './dist/'
+          local_path: './dist/*'
           remote_path: '/www/portfolio/'
           port: 22
           sftp_only: true
