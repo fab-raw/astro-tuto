@@ -44,6 +44,6 @@ jobs:
           server: ${{ secrets.FABRLT_FTP_SERVER }}
           password: ${{ secrets.FABRLT_FTP_PASSWORD }}
           local_path: './dist/*'
-          remote_path: '/www/portfolio/'
+          remote_path: '/home/fabienrawj/www/portfolio/'
           port: 22
           sftp_only: true
